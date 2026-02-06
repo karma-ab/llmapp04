@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.controller.ai_controller import router as ai_router
@@ -19,6 +20,15 @@ app = FastAPI(
     servers=[
         {"url": f"http://localhost:{settings.SERVER_PORT}", "description": "Local Development Server"}
     ],
+)
+
+# Allow CORS from anywhere (dev-friendly; not recommended for production)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    allow_credentials=False,  # must be False when allow_origins=["*"]
 )
 
 app.include_router(ai_router)
