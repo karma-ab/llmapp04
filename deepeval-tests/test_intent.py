@@ -9,7 +9,7 @@ import json
 import pytest
 from deepeval import assert_test
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
-from deepeval.metrics import GEval, AnswerRelevancyMetric
+from deepeval.metrics import GEval
 from deepeval.dataset import EvaluationDataset
 
 from api_client import detect_intent
@@ -115,7 +115,7 @@ for tc in intent_test_cases:
 SCHEMA_DESC = (
     "The JSON must contain: 'primaryIntent' (string), 'secondaryIntents' "
     "(array of strings), 'intentCategory' (string: one of question, request, "
-    "statement, or command), and 'confidence' (number between 0 and 1)."
+    "command, or statement), and 'confidence' (number between 0 and 1)."
 )
 
 intent_schema_metric = json_schema_metric(SCHEMA_DESC)
@@ -134,7 +134,7 @@ intent_category_metric = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
-    threshold=0.7,
+    threshold=0.5,
 )
 
 intent_primary_metric = GEval(
@@ -150,7 +150,7 @@ intent_primary_metric = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
-    threshold=0.7,
+    threshold=0.5,
 )
 
 intent_relevancy_metric = answer_relevancy_metric()

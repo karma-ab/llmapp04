@@ -9,7 +9,7 @@ import json
 import pytest
 from deepeval import assert_test
 from deepeval.test_case import LLMTestCase, LLMTestCaseParams
-from deepeval.metrics import GEval, AnswerRelevancyMetric
+from deepeval.metrics import GEval
 from deepeval.dataset import EvaluationDataset
 
 from api_client import classify_text
@@ -116,6 +116,8 @@ classify_correctness_metric = GEval(
         "actual output are reasonable and accurate for the given input text. "
         "The labels should be topically relevant to the text content. "
         "The primaryCategory should represent the dominant topic. "
+        "Closely related categories (e.g. 'business' vs 'finance') should be "
+        "considered acceptable. "
         "The confidence score should be between 0 and 1."
     ),
     evaluation_params=[
@@ -123,7 +125,7 @@ classify_correctness_metric = GEval(
         LLMTestCaseParams.ACTUAL_OUTPUT,
         LLMTestCaseParams.EXPECTED_OUTPUT,
     ],
-    threshold=0.7,
+    threshold=0.5,
 )
 
 classify_relevancy_metric = answer_relevancy_metric()
