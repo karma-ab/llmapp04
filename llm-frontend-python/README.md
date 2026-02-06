@@ -41,4 +41,4 @@
   ## Terminal 2 - Frontend
   cd llm-frontend-python && python3 app.py
   
-  ## Open http://localhost:5000 
+  ## Open http://localhost:5001
